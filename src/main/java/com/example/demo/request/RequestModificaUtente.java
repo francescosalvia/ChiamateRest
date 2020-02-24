@@ -16,6 +16,15 @@ public class RequestModificaUtente {
 
     private String sesso;
 
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getNome() {
         return nome;
