@@ -7,6 +7,7 @@ import com.example.demo.service.Richiami;
 import net.minidev.json.JSONObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -121,6 +122,32 @@ class DemoApplicationTests {
         }
 
     }
+
+
+    @Test
+    public void logout() {
+
+        try {
+            String token = ("Bearer " + login("http://localhost:8080/login"));
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost("http://localhost:8080/logout");
+
+            httpPost.addHeader(new BasicHeader("Authorization", token));
+
+            CloseableHttpResponse response = client.execute(httpPost);
+
+            String json = EntityUtils.toString(response.getEntity());
+
+            logger.info(json);
+
+            client.close();
+        } catch (IOException e) {
+            logger.error("Eccezione IOException in logout ", e);
+        } catch (ParseException e) {
+            logger.error("Eccezione ParseException in logout ", e);
+        }
+    }
+
 
 
 }
